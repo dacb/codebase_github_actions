@@ -32,13 +32,8 @@ jobs:
       run: |
         conda install --yes coverage coveralls
         coverage run -m unittest discover
-
-    finish:
-        needs: build-linux
-        runs-on: ubuntu-latest
-        steps:
-            - name: Coveralls Finished
-            uses: coverallsapp/github-action@master
-            with:
-                github-token: ${{ secrets.github_token }}
-                parallel-finished: true
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true
