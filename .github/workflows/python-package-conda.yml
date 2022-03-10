@@ -36,4 +36,18 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.github_token }}
+        git-commit: ${{ github.event.pull_request.head.sha || github.sha }}
+        flag-name: run-${{ matrix.ci_node_index }}-${{ github.run_id }}
+        path-to-lcov: ${{ env.COVERAGE_LCOV_FILE_PATH }}
+        parallel-finished: true
+
+ finish:
+    needs: test_apps
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        git-commit: ${{ github.event.pull_request.head.sha || github.sha }}
         parallel-finished: true
